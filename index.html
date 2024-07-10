@@ -9,12 +9,56 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            margin-top: 50px;
+            margin-top: 30px;
         }
 
         body div {
             cursor: pointer;
-            position: relative; /* Garante que a div pode ter elementos absolutamente posicionados dentro */
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #resultadoHeads button {
+            position: absolute;
+            top: 33%;
+            right: 23%;
+            height: 68px;
+            width: 90px;
+        }
+
+        #superior button {
+            position: absolute;
+            top: 23%;
+            right: 8%;
+            height: 180px;
+            width: 176px;
+        }
+
+        #resultadoCalca button {
+            position: absolute;
+            top: 13%;
+            right: 24%;
+            height: 175px;
+            width: 126px;
+        }
+
+        #resultadoTenis button {
+            position: absolute;
+            top: 25%;
+            right: 19%;
+            height: 100px;
+            width: 123px;
+        }
+
+        button.transparente {
+            background-color: transparent;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         #geral {
@@ -23,50 +67,45 @@
             align-items: center;
         }
 
-        /* Estilos para imagens de calças */
         .imagem-fit.calcas {
-            width: 220px;
-            height: 260px;
+            width: 270px;
+            height: 320px;
             object-fit: cover;
             margin: 10px;
             display: block;
             cursor: pointer;
         }
 
-        /* Estilos para imagens de peitas */
         .imagem-fit.peitas {
-            width: 200px;
-            height: 280px;
-            object-fit: cover;
-            margin: 10px;
-            display: block;
-            cursor: pointer;
-        }
-
-        /* Estilos para imagens de moletas */
-        .imagem-fit.moletas {
-            width: 200px;
-            height: 280px;
-            object-fit: cover;
-            margin: 10px;
-            display: block;
-            cursor: pointer;
-        }
-
-        /* Estilos para imagens de tênis */
-        .imagem-fit.tenis {
-            width: 175px; 
-            height: 200px;
-            object-fit: cover;
-            margin: 10px;
-            display: block;
-            cursor: pointer;
-        }
-
-        /* Estilos para imagens de heads */
-        .imagem-fit.heads {
             width: 260px;
-            height: 200px;
+            height: 310px;
+            object-fit: cover;
+            margin: 10px;
+            display: block;
+            cursor: pointer;
+        }
+
+        .imagem-fit.moletas {
+            width: 260px;
+            height: 310px;
+            object-fit: cover;
+            margin: 10px;
+            display: block;
+            cursor: pointer;
+        }
+
+        .imagem-fit.tenis {
+            width: 190px;
+            height: 210px;
+            object-fit: cover;
+            margin: 10px;
+            display: block;
+            cursor: pointer;
+        }
+
+        .imagem-fit.heads {
+            width: 135px;
+            height: 120px;
             object-fit: cover;
             margin: 10px;
             display: block;
@@ -76,6 +115,31 @@
         #superior {
             display: flex;
             flex-direction: row;
+            margin-left: 14vw;
+            position: absolute;
+            top: 30%;
+            right: 18%;
+            z-index: 1;
+        }
+
+        #resultadoCalca {
+            position: absolute;
+            top: 215%;
+            right: 38%;
+        }
+
+        #resultadoTenis {
+            position: absolute;
+            top: 380%;
+            right: 41%;
+        }
+
+        #resultadoHeads {
+            z-index: 2;
+        }
+
+        #resultadoMoleta {
+            transition: left 0.3s;
         }
     </style>
 </head>
@@ -83,8 +147,9 @@
 <body>
 
     <h2>FitGenerator</h2>
-    <br><br>
     <button onclick="randomizeTodos()">Aleatorizar Todos</button>
+    <button onclick="moverEsquerda()">Mover Moleta para a Esquerda</button>
+    <button onclick="moverDireita()">Mover Moleta para a Direita</button>
 
     <div id="geral">
         <div id="resultadoHeads"></div>
@@ -169,47 +234,56 @@
         ];
 
         const heads = [
-            "imagens/heads/bucket.png",
             "imagens/heads/ct1.png",
             "imagens/heads/ct2.png",
             "imagens/heads/ct3.png",
             "imagens/heads/ct5.png",
             "imagens/heads/ct6.png",
-            "imagens/heads/ct7.png",
-            "imagens/heads/toucaFogo.png",
-            "imagens/heads/toucaThrasher.png",
-            "imagens/heads/boneJordan.png",
-            "imagens/heads/cortez.png"
+            "imagens/heads/ct7.png"
         ];
 
         function randomCalca() {
             const indiceAleatorio = Math.floor(Math.random() * calcas.length);
             const resultadoCalca = document.getElementById("resultadoCalca");
-            resultadoCalca.innerHTML = `<img class="imagem-fit calcas" src="${calcas[indiceAleatorio]}" alt="Calça" onclick="randomCalca()">`;
+            resultadoCalca.innerHTML = `
+            <img class="imagem-fit calcas" src="${calcas[indiceAleatorio]}" alt="Calça">
+            <button class="transparente" onclick="randomCalca()"></button>`;
         }
+
+        var camisaVez = '';
 
         function randomPeita() {
             const indiceAleatorio = Math.floor(Math.random() * peitas.length);
             const resultadoPeita = document.getElementById("resultadoPeita");
-            resultadoPeita.innerHTML = `<img class="imagem-fit peitas" src="${peitas[indiceAleatorio]}" alt="Peita" onclick="randomPeita()">`;
+            camisaVez = peitas[indiceAleatorio]
+            resultadoPeita.innerHTML = `
+            <img class="imagem-fit peitas" src="${peitas[indiceAleatorio]}" alt="Peita">
+            <button class="transparente" onclick="randomPeita()"></button>`;
         }
 
         function randomTenis() {
             const indiceAleatorio = Math.floor(Math.random() * tenis.length);
             const resultadoTenis = document.getElementById("resultadoTenis");
-            resultadoTenis.innerHTML = `<img class="imagem-fit tenis" src="${tenis[indiceAleatorio]}" alt="Tênis" onclick="randomTenis()">`;
+            resultadoTenis.innerHTML = `
+            <img class="imagem-fit tenis" src="${tenis[indiceAleatorio]}" alt="Tênis">
+            <button class="transparente" onclick="randomTenis()"></button>`;
         }
 
         function randomMoleta() {
             const indiceAleatorio = Math.floor(Math.random() * moletas.length);
             const resultadoMoleta = document.getElementById("resultadoMoleta");
-            resultadoMoleta.innerHTML = `<img class="imagem-fit moletas" src="${moletas[indiceAleatorio]}" alt="Moleta" onclick="randomMoleta()">`;
+            resultadoMoleta.innerHTML = `
+            <img class="imagem-fit moletas" src="${moletas[indiceAleatorio]}" alt="Moleta">
+            <button class="transparente" onclick="randomMoleta()"></button>`;
         }
 
         function randomHeads() {
             const indiceAleatorio = Math.floor(Math.random() * heads.length);
             const resultadoHeads = document.getElementById("resultadoHeads");
-            resultadoHeads.innerHTML = `<img class="imagem-fit heads" src="${heads[indiceAleatorio]}" alt="Heads" onclick="randomHeads()">`;
+            resultadoHeads.innerHTML = `
+            <img class="imagem-fit heads" src="${heads[indiceAleatorio]}" alt="Heads">
+            <button class="transparente" onclick="randomHeads()"></button>
+            `;
         }
 
         function randomizeTodos() {
@@ -219,6 +293,35 @@
             randomMoleta();
             randomHeads();
         }
+
+        let currentLeft = 0;
+        var ativoEsquerda = true;
+        var ativoDireita = false;
+        function moverEsquerda() {
+            if(!ativoDireita){
+                const resultadoMoleta = document.getElementById("resultadoMoleta");
+                currentLeft -= 285; // Ajusta este valor para mover mais ou menos
+                resultadoMoleta.style.left = currentLeft + "px";
+                resultadoPeita.innerHTML = ''
+                ativoDireita = true;
+                ativoEsquerda = false;
+            }
+        }
+
+        function moverDireita() {
+            if(!ativoEsquerda){
+                const resultadoMoleta = document.getElementById("resultadoMoleta");
+                currentLeft += 285; // Ajusta este valor para mover mais ou menos
+                resultadoMoleta.style.left = currentLeft + "px";
+                resultadoPeita.innerHTML = `
+                <img class="imagem-fit peitas" src="${camisaVez}" alt="Peita">
+                <button class="transparente" onclick="randomPeita()"></button>`;
+                ativoEsquerda = true;
+                ativoDireita = false;
+            }  
+        }
+
+        randomizeTodos();
     </script>
 
 </body>
