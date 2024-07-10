@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitGenerator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        body div {
+            cursor: pointer;
+            position: relative; /* Garante que a div pode ter elementos absolutamente posicionados dentro */
+        }
+
+        #geral {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Estilos para imagens de calças */
+        .imagem-fit.calcas {
+            width: 220px;
+            height: 260px;
+            object-fit: cover;
+            margin: 10px;
+            display: block;
+            cursor: pointer;
+        }
+
+        /* Estilos para imagens de peitas */
+        .imagem-fit.peitas {
+            width: 200px;
+            height: 280px;
+            object-fit: cover;
+            margin: 10px;
+            display: block;
+            cursor: pointer;
+        }
+
+        /* Estilos para imagens de moletas */
+        .imagem-fit.moletas {
+            width: 200px;
+            height: 280px;
+            object-fit: cover;
+            margin: 10px;
+            display: block;
+            cursor: pointer;
+        }
+
+        /* Estilos para imagens de tênis */
+        .imagem-fit.tenis {
+            width: 175px; 
+            height: 200px;
+            object-fit: cover;
+            margin: 10px;
+            display: block;
+            cursor: pointer;
+        }
+
+        /* Estilos para imagens de heads */
+        .imagem-fit.heads {
+            width: 260px;
+            height: 200px;
+            object-fit: cover;
+            margin: 10px;
+            display: block;
+            cursor: pointer;
+        }
+
+        #superior {
+            display: flex;
+            flex-direction: row;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>FitGenerator</h2>
+    <br><br>
+    <button onclick="randomizeTodos()">Aleatorizar Todos</button>
+
+    <div id="geral">
+        <div id="resultadoHeads"></div>
+        <div id="superior">
+            <div id="resultadoPeita"></div>
+            <div id="resultadoMoleta"></div>
+        </div>
+        <div id="resultadoCalca"></div>
+        <div id="resultadoTenis"></div>
+    </div>
+
+    <script>
+        const calcas = [
+            "imagens/calcas/cargoCamo.png",
+            "imagens/calcas/blackCotele.png",
+            "imagens/calcas/blueDickes.png",
+            "imagens/calcas/blueJorts.png",
+            "imagens/calcas/brownJorts.png",
+            "imagens/calcas/distonedBlueJeans.png",
+            "imagens/calcas/distonedJeans.png",
+            "imagens/calcas/lightJorts.png",
+            "imagens/calcas/parachute.png",
+            "imagens/calcas/parachuteJeans.png",
+            "imagens/calcas/nativePatch.png",
+            "imagens/calcas/lee.png",
+            "imagens/calcas/lightLevis.png",
+            "imagens/calcas/ysl.png"
+        ];
+
+        const moletas = [
+            "imagens/moleta/blackHoodie.png",
+            "imagens/moleta/garfieldHoodie.png",
+            "imagens/moleta/lalaJacket.png",
+            "imagens/moleta/panthersHoodie.png",
+            "imagens/moleta/colete.png",
+            "imagens/moleta/umbro.png",
+            "imagens/moleta/corta.png",
+            "imagens/moleta/vans.png",
+            "imagens/moleta/rebookFleece.png",
+            "imagens/moleta/rebookJacket.png"
+        ];
+
+        const tenis = [
+            "imagens/tenis/adventure.png",
+            "imagens/tenis/p6000.png",
+            "imagens/tenis/nbBlue.png",
+            "imagens/tenis/9060.png",
+            "imagens/tenis/m2k.png",
+            "imagens/tenis/dunks.png",
+            "imagens/tenis/timbs.png",
+            "imagens/tenis/superstar.png"
+        ];
+
+        const peitas = [
+            "imagens/peita/ironMaiden.png",
+            "imagens/peita/roma.png",
+            "imagens/peita/lrg.png",
+            "imagens/peita/2real.png",
+            "imagens/peita/vilam.png",
+            "imagens/peita/thrasher.png",
+            "imagens/peita/dc.png",
+            "imagens/peita/jetsons.png",
+            "imagens/peita/hurley.png",
+            "imagens/peita/nikeBranca.png",
+            "imagens/peita/native.png",
+            "imagens/peita/bobBranca.png",
+            "imagens/peita/hufBranca.png",
+            "imagens/peita/damassa.png",
+            "imagens/peita/vilamManga.png",
+            "imagens/peita/lalaVerde.png",
+            "imagens/peita/poloCinza.png",
+            "imagens/peita/lalaAzul.png",
+            "imagens/peita/cougars.png",
+            "imagens/peita/peixe1.png",
+            "imagens/peita/pretaLisa.png",
+            "imagens/peita/peixe2.png",
+            "imagens/peita/braza98.png",
+            "imagens/peita/gamafire.png",
+            "imagens/peita/big.png",
+            "imagens/peita/alexandre.png",
+            "imagens/peita/sabota.png"
+        ];
+
+        const heads = [
+            "imagens/heads/bucket.png",
+            "imagens/heads/ct1.png",
+            "imagens/heads/ct2.png",
+            "imagens/heads/ct3.png",
+            "imagens/heads/ct5.png",
+            "imagens/heads/ct6.png",
+            "imagens/heads/ct7.png",
+            "imagens/heads/toucaFogo.png",
+            "imagens/heads/toucaThrasher.png",
+            "imagens/heads/boneJordan.png",
+            "imagens/heads/cortez.png"
+        ];
+
+        function randomCalca() {
+            const indiceAleatorio = Math.floor(Math.random() * calcas.length);
+            const resultadoCalca = document.getElementById("resultadoCalca");
+            resultadoCalca.innerHTML = `<img class="imagem-fit calcas" src="${calcas[indiceAleatorio]}" alt="Calça" onclick="randomCalca()">`;
+        }
+
+        function randomPeita() {
+            const indiceAleatorio = Math.floor(Math.random() * peitas.length);
+            const resultadoPeita = document.getElementById("resultadoPeita");
+            resultadoPeita.innerHTML = `<img class="imagem-fit peitas" src="${peitas[indiceAleatorio]}" alt="Peita" onclick="randomPeita()">`;
+        }
+
+        function randomTenis() {
+            const indiceAleatorio = Math.floor(Math.random() * tenis.length);
+            const resultadoTenis = document.getElementById("resultadoTenis");
+            resultadoTenis.innerHTML = `<img class="imagem-fit tenis" src="${tenis[indiceAleatorio]}" alt="Tênis" onclick="randomTenis()">`;
+        }
+
+        function randomMoleta() {
+            const indiceAleatorio = Math.floor(Math.random() * moletas.length);
+            const resultadoMoleta = document.getElementById("resultadoMoleta");
+            resultadoMoleta.innerHTML = `<img class="imagem-fit moletas" src="${moletas[indiceAleatorio]}" alt="Moleta" onclick="randomMoleta()">`;
+        }
+
+        function randomHeads() {
+            const indiceAleatorio = Math.floor(Math.random() * heads.length);
+            const resultadoHeads = document.getElementById("resultadoHeads");
+            resultadoHeads.innerHTML = `<img class="imagem-fit heads" src="${heads[indiceAleatorio]}" alt="Heads" onclick="randomHeads()">`;
+        }
+
+        function randomizeTodos() {
+            randomCalca();
+            randomPeita();
+            randomTenis();
+            randomMoleta();
+            randomHeads();
+        }
+    </script>
+
+</body>
+
+</html>
